@@ -2,6 +2,7 @@
   "name": "music-shape-test",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://aarick-f.github.io/music-shape-test",
   "dependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

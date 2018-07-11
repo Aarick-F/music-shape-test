@@ -7,6 +7,10 @@ html {
   -ms-user-select: none; /* IE10+ */
 }
 
+body {
+  background: #2A2C2B;
+}
+
 .main {
   width: 100%;
   min-height: 100vh;
@@ -20,8 +24,9 @@ html {
 .header {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
   background: #DC3522;
   color: #2A2C2B;
   text-align: center;
@@ -31,6 +36,54 @@ html {
   font-size: 2.5em;
   padding: 20px 0;
   text-shadow: 1px 1px 0px #D9CB9E;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav h2 {
+  margin: 10px;
+  padding: 10px 15px;
+  background: #2A2C2B;
+  color: #DC3522;
+  border-radius: 5px;
+}
+
+.nav h2:hover {
+  background: #D9CB9E;
+  color: #2A2C2B;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.post {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(217, 203, 158, 1);
+}
+
+.postInfo {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cycle {
+  color: #2A2C2B;
+  margin: 10px 20px;
+}
+
+.cycle i:hover {
+  color: #DC3522;
+  transition: 0.1s;
+  cursor: pointer;
 }
 
 .canvasWrapper {
@@ -44,12 +97,12 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #D9CB9E;
+  background: rgba(217, 203, 158, 1);
   color: #2A2C2B;
 }
 
 .footer h1 {
   font-size: 1.25em;
-  padding: 30px 0;
+  padding: 15px 0;
   text-shadow: 1px 1px 0px #DC3522;
 }

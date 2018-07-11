@@ -1,6 +1,30 @@
 import React, { Component } from "react";
+import Tone from "tone";
+
+const synth = new Tone.Synth();
+synth.toMaster();
+
+const notes = [
+  "C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4"
+];
 
 let circles = [];
+const colors = [
+  "#3B9994", "#8BCCC9", "#C8FFDD",
+  "#FF88AE", "#CC6CBB", "#F20574",
+  "#2A1673", "#81006E", "#F2F0C9",
+  "#F25C5C"
+];
+
+let step = 0;
+const getNote = () => {
+  let note = notes[step];
+  step++;
+  if(step >= notes.length) {
+    step = 0;
+  }
+  return note;
+}
 
 class Circle {
   constructor(coords, radius, dx, dy) {
@@ -10,17 +34,14 @@ class Circle {
     this.dx = this.getVelocity();
     this.dy = this.getVelocity();;
     this.color = this.getColor();
-    this.shadow = this.getGlow(this.color);
   }
 
   draw(canvas) {
     const ctx = canvas.getContext("2d");
     ctx.beginPath();
-    ctx.lineWidth = 3;
-    ctx.arc(this.x, this.y - 80, this.radius, 0, Math.PI * 2, false);
+    ctx.lineWidth = 5;
+    ctx.arc(this.x, this.y - 120, this.radius, 0, Math.PI * 2, false);
     ctx.strokeStyle = this.color;
-    ctx.shadowColor = "rgba(255,255,255,1)";
-    ctx.shadowBlur = 15;
     ctx.stroke();
   }
 
@@ -28,11 +49,13 @@ class Circle {
     if(this.x + this.radius > canvas.width || this.x - this.radius < 0) {
       this.dx = -this.dx;
       // LOGIC TO PLAY SOUND GOES HERE
+      synth.triggerAttackRelease(getNote(), "32n");
     }
     this.x += this.dx;
-    if(this.y - this.radius > canvas.height || this.y - (this.radius + (this.radius * 1.75)) < 0) {
+    if(this.y - (this.radius + (this.radius * 1.25)) > canvas.height || this.y - (this.radius + (this.radius * 1.75)) < 0) {
       this.dy = -this.dy;
       // LOGIC TO PLAY SOUND GOES HERE
+      synth.triggerAttackRelease(getNote(), "32n");
     }
     this.y += this.dy;
   }
@@ -44,19 +67,8 @@ class Circle {
   }
 
   getColor() {
-    let colors = [];
-    for(let i = 0; i < 3; i++) {
-      let rand = Math.floor(Math.random() * 256);
-      colors.push(rand);
-    }
-    return `rgb(${colors[0]},${colors[1]},${colors[2]})`;
-  }
-
-  getGlow(color) {
-    let glow = color.split("");
-    glow.splice(3, 0, "a");
-    glow.splice(15, 0, ",0.9");
-    return glow.join("");
+    let picker = Math.floor(Math.random() * colors.length);
+    return colors[picker];
   }
 }
 

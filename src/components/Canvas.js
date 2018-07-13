@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Tone from "tone";
 
+
 const synth = new Tone.Synth();
 synth.toMaster();
 
 const notes = [
-  "C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4"
+  "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"
 ];
 
 let circles = [];
@@ -40,19 +41,20 @@ class Circle {
     const ctx = canvas.getContext("2d");
     ctx.beginPath();
     ctx.lineWidth = 5;
-    ctx.arc(this.x, this.y - 120, this.radius, 0, Math.PI * 2, false);
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     ctx.strokeStyle = this.color;
     ctx.stroke();
   }
 
   update(canvas) {
+    // console.log(this.y);
     if(this.x + this.radius > canvas.width || this.x - this.radius < 0) {
       this.dx = -this.dx;
       // LOGIC TO PLAY SOUND GOES HERE
       synth.triggerAttackRelease(getNote(), "32n");
     }
     this.x += this.dx;
-    if(this.y - (this.radius + (this.radius * 1.25)) > canvas.height || this.y - (this.radius + (this.radius * 1.75)) < 0) {
+    if(this.y + this.radius > canvas.height || this.y - this.radius < 0) {
       this.dy = -this.dy;
       // LOGIC TO PLAY SOUND GOES HERE
       synth.triggerAttackRelease(getNote(), "32n");
@@ -87,12 +89,17 @@ class Canvas extends Component {
   }
 
   handleClick(e) {
+    e.preventDefault();
     let location = {
-      x: e.clientX,
-      y: e.clientY
+      x: this.myCanvas.width / 2,
+      y: window.innerHeight - this.myCanvas.height
     }
-    let newCircle = new Circle(location, 40);
+    let newCircle = new Circle(location, this.getRadius());
     circles.push(newCircle);
+  }
+
+  getRadius() {
+    return Math.floor(Math.random() * 30) + 10;
   }
 
   animate() {

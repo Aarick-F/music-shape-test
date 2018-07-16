@@ -80,12 +80,21 @@ class Canvas extends Component {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.animate = this.animate.bind(this);
+    this.state = {
+      runCanvas: true
+    }
   }
 
   componentDidMount() {
     this.myCanvas.height = this.boxSize.clientHeight;
     this.myCanvas.width = this.boxSize.clientWidth;
     this.animate();
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      runCanvas: false
+    });
   }
 
   handleClick(e) {
@@ -103,6 +112,9 @@ class Canvas extends Component {
   }
 
   animate() {
+    if(!this.state.runCanvas) {
+      return;
+    }
     requestAnimationFrame(this.animate);
     let c = this.myCanvas.getContext("2d");
     c.clearRect(0, 0, this.myCanvas.width, this.myCanvas.height);
@@ -114,8 +126,21 @@ class Canvas extends Component {
 
   render() {
     return (
-      <div className="canvasWrapper" ref={boxSize => this.boxSize = boxSize}>
-        <canvas ref={myCanvas => this.myCanvas = myCanvas} onClick={this.handleClick}></canvas>
+      <div className="postWrapper">
+        <div className="post">
+          <div className="cycle">
+            <i className="fas fa-arrow-left fa-2x"></i>
+          </div>
+          <div className="postInfo">
+            <h1>TestUser - "C Major Scale"</h1>
+          </div>
+          <div className="cycle">
+            <i className="fas fa-arrow-right fa-2x"></i>
+          </div>
+        </div>
+        <div className="canvasWrapper" ref={boxSize => this.boxSize = boxSize}>
+          <canvas ref={myCanvas => this.myCanvas = myCanvas} onClick={this.handleClick}></canvas>
+        </div>
       </div>
     );
   }

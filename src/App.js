@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // Custom CSS
 import './App.css';
@@ -7,17 +8,19 @@ import './App.css';
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Canvas from "./components/Canvas";
-import PostHeader from "./components/PostHeader";
+import CreatePost from "./components/CreatePost";
 
 class App extends Component {
   render() {
     return (
-      <div className="main">
-        <Header />
-        <PostHeader />
-        <Canvas />
-        <Footer />
-      </div>
+      <Router>
+        <div className="main">
+          <Header />
+          <Route exact path="/" component={Canvas} />
+          <Route exact path="/post" component={CreatePost} />
+          <Footer />
+        </div>
+      </Router>
     );
   }
 }

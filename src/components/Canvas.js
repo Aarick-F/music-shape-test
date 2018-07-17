@@ -80,21 +80,24 @@ class Canvas extends Component {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.animate = this.animate.bind(this);
-    this.state = {
-      runCanvas: true
-    }
+    this.runCanvas = true;
   }
 
   componentDidMount() {
+    window.addEventListener("resize", () => {
+      circles = [];
+      this.myCanvas.height = this.boxSize.clientHeight;
+      this.myCanvas.width = this.boxSize.clientWidth;
+    });
     this.myCanvas.height = this.boxSize.clientHeight;
     this.myCanvas.width = this.boxSize.clientWidth;
     this.animate();
   }
 
   componentWillUnmount() {
-    this.setState({
-      runCanvas: false
-    });
+    console.log("Unmounting!");
+    this.runCanvas = false;
+    circles = [];
   }
 
   handleClick(e) {
@@ -112,7 +115,7 @@ class Canvas extends Component {
   }
 
   animate() {
-    if(!this.state.runCanvas) {
+    if(!this.runCanvas) {
       return;
     }
     requestAnimationFrame(this.animate);

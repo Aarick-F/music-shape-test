@@ -222,6 +222,12 @@ a, a:focus, a:hover, a:visited, a:link, a:active {
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: #DC3522;
+  transition: 0.2s;
 }
 
 select:active, select:hover, select:focus {
